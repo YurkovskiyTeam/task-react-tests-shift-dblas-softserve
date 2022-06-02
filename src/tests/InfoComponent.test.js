@@ -1,7 +1,21 @@
-describe("just fake tests for Info Component", () => {
-  it("1st fake test of Info Component", () => {
-    expect(true).toEqual(false);
+import Info from "../components/Info/index";
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { mockedGetGitHubUser } from "../services/DataService/__mocks__/index";
+jest.mock("../services/DataService");
+
+describe("Info Component Tests", () => {
+  const props = { user: "daria" };
+
+  test("if correct text is rendered within a view", () => {
+    render(<Info {...props} />);
+
+    expect(screen.getByText("GitHub User Info")).toBeInTheDocument();
+  });
+
+  test("if correct response text is rendered when successfully fetched", async () => {
+    render(<Info {...props} />);
+
+    expect(await screen.findByText(/daria/)).toBeInTheDocument();
   });
 });
-
-// TODO: Your test need to be here instead of fake tests
